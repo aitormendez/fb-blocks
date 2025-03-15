@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Plugin Name:       Fb Blocks
- * Description:       Example block scaffolded with Create Block tool.
+ * Description:       Bloques personalizados de FB Blocks.
  * Version:           0.1.0
  * Requires at least: 6.7
  * Requires PHP:      7.4
@@ -10,31 +11,77 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       fb-blocks
  *
- * @package CreateBlock
+ * @package FbBlocks
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
 /**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
- *
- * @see https://developer.wordpress.org/reference/functions/register_block_type/
+ * Registrar bloques desde build/blocks-manifest.php.
  */
-function create_block_fb_blocks_block_init() {
-	if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) { // Function introduced in WordPress 6.8.
-		wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
-	} else {
-		if ( function_exists( 'wp_register_block_metadata_collection' ) ) { // Function introduced in WordPress 6.7.
-			wp_register_block_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
+function fb_blocks_register_all_blocks()
+{
+	$manifest_file = __DIR__ . '/build/blocks-manifest.php';
+
+	if (! file_exists($manifest_file)) {
+		error_log('⚠️ Error: blocks-manifest.php no encontrado en ' . $manifest_file);
+		return;
+	}
+
+	// Carga la información del manifest
+	$manifest_data = require $manifest_file;
+
+	// Registra automáticamente todos los bloques *excepto* "post"
+	foreach (array_keys($manifest_data) as $block_type) {
+		// Si este bloque es "post", lo saltamos
+		if ($block_type === 'post' || $block_type === 'marquee') {
+			continue;
 		}
-		$manifest_data = require __DIR__ . '/build/blocks-manifest.php';
-		foreach ( array_keys( $manifest_data ) as $block_type ) {
-			register_block_type( __DIR__ . "/build/{$block_type}" );
-		}
+		// Agregar el prefijo "fb-blocks/"
+		register_block_type("fb-blocks/{$block_type}", [
+			'editor_script' => "file:./build/{$block_type}/index.js",
+			// 'editor_style'  => "file:./build/{$block_type}/style.css",
+		]);
 	}
 }
-add_action( 'init', 'create_block_fb_blocks_block_init' );
+add_action('init', 'fb_blocks_register_all_blocks');
+
+/**
+ * Cargar render callback del bloque 'post'.
+ */
+require_once plugin_dir_path(__FILE__) . 'src/post/inc/render-post.php';
+
+/**
+ * Registrar el bloque 'post' con render_callback.
+ */
+function fb_blocks_register_post_block()
+{
+	register_block_type(
+		__DIR__ . '/build/post',
+		[
+			'render_callback' => 'fb_blocks_render_post_block',
+		]
+	);
+}
+add_action('init', 'fb_blocks_register_post_block');
+
+/**
+ * Cargar render callback del bloque 'marquee'.
+ */
+require_once plugin_dir_path(__FILE__) . 'src/marquee/inc/render-marquee.php';
+
+/**
+ * Registrar el bloque 'marquee' con render_callback.
+ */
+function fb_blocks_register_marquee_block()
+{
+	register_block_type(
+		__DIR__ . '/build/marquee',
+		[
+			'render_callback' => 'fb_blocks_render_marquee_block',
+		]
+	);
+}
+add_action('init', 'fb_blocks_register_marquee_block');

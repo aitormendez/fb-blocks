@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "fb-blocks/marquee",
+	"version": "0.1.0",
+	"title": "Marquee",
+	"description": "Un texto con efecto de marquesina.",
+	"category": "common",
+	"icon": "admin-site",
+	"textdomain": "fb-blocks-marquee",
+	"supports": {
+		"align": ["wide", "full"],
+		"html": false
+	},
+	"attributes": {
+		"marqueeText": {
+			"type": "string",
+			"default": "Sample marquee text"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "#000000"
+		},
+		"pillBackgroundColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"speed": {
+			"type": "number",
+			"default": 10
+		},
+		"fontFamily": {
+			"type": "string",
+			"default": "arial, sans-serif"
+		},
+		"linkUrl": {
+			"type": "string",
+			"default": "#"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css"
+}

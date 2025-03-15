@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "fb-blocks/post",
+  "version": "0.1.0",
+  "title": "Post",
+  "description": "Muestra un post o producto con distintos layouts.",
+  "category": "widgets",
+  "icon": "admin-post",
+  "textdomain": "post",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "contentType": {
+      "type": "string",
+      "default": "product"
+    },
+    "postId": {
+      "type": "number",
+      "default": 0
+    },
+    "layout": {
+      "type": "string",
+      "default": "layout1"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#ffff00"
+    },
+    "backgroundInteriorColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "#3e2b2f"
+    },
+    "image_url": {
+      "type": "string",
+      "default": "https://via.placeholder.com/150"
+    },
+    "align": {
+      "type": "string"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

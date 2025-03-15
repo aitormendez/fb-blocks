@@ -18,7 +18,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 export default function save() {
 	return (
 		<p { ...useBlockProps.save() }>
-			{ 'Fb Blocks – hello from the saved content!' }
+			{ 'Post – hello from the saved content!' }
 		</p>
 	);
 }
