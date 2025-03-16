@@ -20,7 +20,6 @@
 		"autoprefixer": "^10.4.21"
 	},
 	"dependencies": {
-		"@devnomic/marquee": "^1.0.3",
 		"gsap": "^3.12.7"
 	}
 }

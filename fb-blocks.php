@@ -68,6 +68,7 @@ add_action('init', 'fb_blocks_register_post_block');
  */
 require_once plugin_dir_path(__FILE__) . 'src/marquee/inc/render-marquee.php';
 
+
 /**
  * Registrar el bloque 'marquee' con render_callback.
  */
