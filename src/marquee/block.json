@@ -27,7 +27,7 @@
 		},
 		"textColor": {
 			"type": "string",
-			"default": "#ffffff"
+			"default": "#000000"
 		},
 		"speed": {
 			"type": "number",
@@ -43,5 +43,6 @@
 		}
 	},
 	"editorScript": "file:./index.js",
-	"style": "file:./style.css"
+	"editorStyle": "file:./index.css",
+	"viewStyle": "file:./style-index.css"
 }

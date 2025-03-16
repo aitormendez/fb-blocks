@@ -45,14 +45,13 @@ export default function Edit({ attributes, setAttributes }) {
 	// Control de preview vs edición
 	const [isPreview, setIsPreview] = useState(false);
 
-	// Refs para medir el contenedor y el texto
+	// Ref para medir el contenedor
 	const containerRef = useRef(null);
-	const textRef = useRef(null);
 
-	// Texto repetido para llenar el contenedor
-	const [repeatedText, setRepeatedText] = useState(marqueeText);
+	// Almacenará un array de strings: cada string será un “fragmento” que renderizamos en <span>
+	const [repeatedSpans, setRepeatedSpans] = useState([]);
 
-	// === Manejo de cambios en atributos ===
+	// === Manejo de cambios en atributos (Inspector/Editor) ===
 	const onChangeMarqueeText = (val) => setAttributes({ marqueeText: val });
 	const onChangeBackgroundColor = (val) =>
 		setAttributes({ backgroundColor: val });
@@ -67,43 +66,47 @@ export default function Edit({ attributes, setAttributes }) {
 	const togglePreview = () => setIsPreview(!isPreview);
 
 	/**
-	 * 1) Repetir el texto para llenar el ancho del contenedor (solo en preview).
+	 * useEffect para calcular cuántas veces hay que repetir el texto.
+	 * Cuando entras en modo "Preview", medimos el ancho del contenedor vs. el ancho de una sola instancia.
 	 */
 	useEffect(() => {
 		if (!isPreview) return;
+		if (!containerRef.current) return;
 
-		// Usamos requestAnimationFrame para post-renders y minimizar reflow
-		requestAnimationFrame(() => {
-			if (!containerRef.current || !textRef.current) return;
+		const containerWidth = containerRef.current.offsetWidth;
 
-			const containerWidth = containerRef.current.offsetWidth;
-			const tempSpan = textRef.current;
-			let combined = marqueeText;
+		// Crear un elemento temporal para medir el ancho de una sola instancia de marqueeText
+		const tempSpan = document.createElement("span");
+		tempSpan.style.whiteSpace = "nowrap";
+		tempSpan.style.visibility = "hidden";
+		tempSpan.style.fontFamily = fontFamily; // Para que mida igual que la vista final
+		tempSpan.innerText = marqueeText;
 
-			// Ajustamos el innerText mientras sea más pequeño que el contenedor
-			tempSpan.innerText = combined;
-			while (tempSpan.offsetWidth < containerWidth) {
-				combined += ` ${marqueeText}`;
-				tempSpan.innerText = combined;
-			}
+		containerRef.current.appendChild(tempSpan);
+		const singleWidth = tempSpan.offsetWidth;
+		containerRef.current.removeChild(tempSpan);
 
-			setRepeatedText(combined);
-		});
-	}, [marqueeText, isPreview]);
+		// Calcular cuántas copias hacen falta para "llenar" y permitir el scroll infinito.
+		const needed = Math.ceil(containerWidth / singleWidth) + 2;
+
+		// Crear un array con la cantidad de copias necesaria
+		const repeatsArray = Array.from({ length: needed }, () => marqueeText);
+
+		setRepeatedSpans(repeatsArray);
+	}, [isPreview, marqueeText, fontFamily]);
 
 	/**
-	 * 2) Animación GSAP para .marquee-text
-	 *    - Se duplicarán dentro del contenedor si quieres bucle infinito
+	 * useEffect para animar con GSAP todos los .marquee-text (hay dos nodos para el loop infinito).
 	 */
 	useEffect(() => {
 		if (!isPreview) return;
 
-		// Hacemos la animación en el siguiente frame
+		// En el siguiente frame, iniciamos la animación
 		requestAnimationFrame(() => {
 			const container = containerRef.current;
 			if (!container) return;
 
-			// Seleccionamos TODOS los .marquee-text dentro del contenedor
+			// Seleccionamos todos los .marquee-text dentro del contenedor
 			const textElements = container.querySelectorAll(".marquee-text");
 			if (!textElements.length) return;
 
@@ -115,9 +118,9 @@ export default function Edit({ attributes, setAttributes }) {
 			});
 		});
 
-		// Limpiar animación al desmontar / cambiar
+		// Limpiar animación al desmontar o al cambiar algo relevante
 		return () => gsap.killTweensOf(".marquee-text");
-	}, [isPreview, repeatedText, speed]);
+	}, [isPreview, repeatedSpans, speed]);
 
 	// === Render ===
 	return (
@@ -194,21 +197,53 @@ export default function Edit({ attributes, setAttributes }) {
 						position: "relative",
 						overflow: "hidden",
 						backgroundColor,
+						whiteSpace: "nowrap",
 					}}
 				>
-					<span
-						ref={textRef}
-						className="marquee-text"
+					<div
+						className="marquee-pill"
 						style={{
-							display: "inline-block",
-							whiteSpace: "nowrap",
 							backgroundColor: pillBackgroundColor,
-							color: textColor,
-							fontFamily,
+							display: "flex",
+							flexDirection: "row",
 						}}
 					>
-						{repeatedText}
-					</span>
+						{/* 
+							Las dos <span> con className="marquee-text" para el loop infinito.
+							Aquí mapeamos repeatedSpans para generar un <span> por cada instancia.
+						*/}
+						<span
+							className="marquee-text"
+							style={{
+								display: "inline-block",
+								whiteSpace: "nowrap",
+								color: textColor,
+								fontFamily,
+							}}
+						>
+							{repeatedSpans.map((text, i) => (
+								<span key={i} style={{ marginRight: "1em" }}>
+									{text}
+								</span>
+							))}
+						</span>
+
+						<span
+							className="marquee-text"
+							style={{
+								display: "inline-block",
+								whiteSpace: "nowrap",
+								color: textColor,
+								fontFamily,
+							}}
+						>
+							{repeatedSpans.map((text, i) => (
+								<span key={i} style={{ marginRight: "1em" }}>
+									{text}
+								</span>
+							))}
+						</span>
+					</div>
 				</div>
 			) : (
 				<div>

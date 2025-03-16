@@ -1,0 +1,12 @@
+.marquee-wrapper {
+	padding: 16px 32px;
+}
+
+.marquee-pill {
+	border-radius: 32px;
+	overflow: hidden;
+}
+
+.marquee-text {
+	font-size: 24px;
+}

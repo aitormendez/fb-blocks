@@ -39,11 +39,7 @@ function fb_blocks_register_all_blocks()
 		if ($block_type === 'post' || $block_type === 'marquee') {
 			continue;
 		}
-		// Agregar el prefijo "fb-blocks/"
-		register_block_type("fb-blocks/{$block_type}", [
-			'editor_script' => "file:./build/{$block_type}/index.js",
-			// 'editor_style'  => "file:./build/{$block_type}/style.css",
-		]);
+		register_block_type(__DIR__ . "/build/{$block_type}");
 	}
 }
 add_action('init', 'fb_blocks_register_all_blocks');
