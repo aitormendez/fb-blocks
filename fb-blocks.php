@@ -18,6 +18,8 @@ if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
+require_once plugin_dir_path(__FILE__) . 'includes/api/video-resolutions.php';
+
 /**
  * Registrar bloques desde build/blocks-manifest.php.
  */
