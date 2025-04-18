@@ -14,9 +14,18 @@ if (! $videoSrc) {
     return '<p>⚠️ No video selected.</p>';
 }
 
+$attrs = $attributes ?? [];
+
+$align   = isset($attrs['align']) ? sanitize_key($attrs['align']) : '';
+$classes = ['fb-video-player'];
+if ($align) {
+    // dará "alignwide" o "alignfull"
+    $classes[] = 'align' . $align;
+}
+
 ?>
 <div
-    class="fb-video-player"
+    class="fb-video-player <?= esc_attr(implode(' ', $classes)) ?>"
     data-videosrc="<?= esc_attr($videoSrc) ?>"
     data-poster="<?= esc_attr($poster) ?>"
     data-autoplay="<?= esc_attr($attrs['autoplay'] ? 'true' : 'false') ?>"
