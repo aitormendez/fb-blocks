@@ -22,9 +22,12 @@
 	"dependencies": {
 		"@radix-ui/react-dropdown-menu": "^2.1.7",
 		"@radix-ui/react-tooltip": "^1.2.0",
+		"@vidstack/player": "^1.6.5",
 		"@vidstack/react": "^1.12.13",
 		"gsap": "^3.12.7",
+		"hls.js": "^1.6.2",
 		"lucide-react": "^0.487.0",
-		"react-feather": "^2.0.10"
+		"react-feather": "^2.0.10",
+		"vidstack": "^1.12.13"
 	}
 }

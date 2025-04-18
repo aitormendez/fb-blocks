@@ -1,5 +1,5 @@
-@import "@vidstack/react/player/styles/default/theme.css";
-@import "@vidstack/react/player/styles/default/layouts/video.css";
+@import "vidstack/player/styles/default/theme.css";
+@import "vidstack/player/styles/default/layouts/video.css";
 
 /**
  * The following styles get applied both on the front of your site
@@ -8,8 +8,15 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-fb-blocks .video {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+.fb-video-player {
+	aspect-ratio: 16 / 9;
+	width: 100%;
+	max-width: 100%;
+	position: relative;
+
+	media-player {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
 }
