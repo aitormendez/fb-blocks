@@ -25,7 +25,7 @@ if ($align) {
 
 ?>
 <div
-    class="fb-video-player <?= esc_attr(implode(' ', $classes)) ?>"
+    class="<?= esc_attr(implode(' ', $classes)) ?>"
     data-videosrc="<?= esc_attr($videoSrc) ?>"
     data-poster="<?= esc_attr($poster) ?>"
     data-autoplay="<?= esc_attr($attrs['autoplay'] ? 'true' : 'false') ?>"
