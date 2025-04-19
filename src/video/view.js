@@ -81,6 +81,22 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		root.replaceChildren(player);
 
+		player.addEventListener("loaded-metadata", (event) => {
+			const videoEl = event.target.querySelector("video");
+			if (!videoEl) return;
+
+			const w = videoEl.videoWidth;
+			const h = videoEl.videoHeight;
+
+			if (w && h) {
+				const ratio = (w / h).toFixed(2); // ej. 1.78 para 16/9
+				console.log(`📐 Video aspect ratio: ${w}:${h} = ${ratio}`);
+
+				// Aplica el aspecto dinámico al contenedor
+				root.style.aspectRatio = `${w} / ${h}`;
+			}
+		});
+
 		player.addEventListener("provider-change", ({ detail }) => {
 			if (detail?.type === "hls" && !detail.library) {
 				detail.library = Hls;
