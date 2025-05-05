@@ -1,1 +1,16 @@
-.marquee-wrapper{padding:16px 32px}.marquee-pill{border-radius:32px;overflow:hidden}.marquee-text{font-size:24px}
+/*!****************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/marquee/editor.css ***!
+  \****************************************************************************************************************************************************************************/
+.marquee-wrapper {
+	padding: 16px 32px;
+}
+
+.marquee-pill {
+	border-radius: 32px;
+	overflow: hidden;
+}
+
+.marquee-text {
+	font-size: 24px;
+}
+

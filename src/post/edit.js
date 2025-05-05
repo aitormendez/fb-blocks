@@ -1,5 +1,6 @@
 import { debounce } from "lodash";
 import {
+	useBlockProps,
 	BlockControls,
 	InspectorControls,
 	PanelColorSettings,
@@ -194,7 +195,7 @@ const Edit = ({ attributes, setAttributes }) => {
 	};
 
 	return (
-		<div>
+		<div {...useBlockProps()}>
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton

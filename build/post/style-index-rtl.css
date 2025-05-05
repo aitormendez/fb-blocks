@@ -1,1 +1,232 @@
-.wp-block-create-block-post{background-color:#21759b;color:#fff;padding:2px}
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/post/style.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.fb-post-layout1-wrapper {
+  display: flex;
+  aspect-ratio: 50/60;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .fb-post-layout1-wrapper {
+    aspect-ratio: 100/50;
+  }
+}
+.fb-post-layout1-col-left,
+.fb-post-layout1-col-right {
+  width: 10%;
+  border-style: solid;
+}
+
+.fb-post-layout1-col-left {
+  border-left-width: 2px;
+}
+
+.fb-post-layout1-col-right {
+  border-right-width: 2px;
+}
+
+@media (min-width: 768px) {
+  .fb-post-layout1-col-left,
+  .fb-post-layout1-col-right {
+    width: 30%;
+  }
+}
+.fb-post-layout1-center {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .fb-post-layout1-center {
+    width: 40%;
+  }
+}
+.fb-post-layout1-image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.fb-post-layout1-image {
+  transition: all 0.3s ease;
+}
+
+.fb-post-layout1-center:hover .fb-post-layout1-image {
+  filter: brightness(0.75) hue-rotate(180deg) saturate(1.5);
+}
+
+.fb-post-layout1-image.horizontal {
+  width: 100%;
+}
+
+.fb-post-layout1-image.vertical {
+  width: 66.6667%;
+}
+
+.fb-post-layout1-title {
+  font-family: Arial Black, sans-serif;
+  margin: 0 1rem 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .fb-post-layout1-title {
+    font-size: 1rem;
+  }
+}
+.fb-post-layout2-wrapper {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  padding: 1rem 0;
+  margin: 1.5rem 1.5rem;
+}
+@media (min-width: 768px) {
+  .fb-post-layout2-wrapper {
+    flex-direction: row;
+  }
+}
+
+.fb-post-layout2-text {
+  padding: 1.5rem 1.5rem 2.5rem;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .fb-post-layout2-text {
+    width: 50%;
+  }
+}
+
+.fb-post-layout2-text-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.fb-post-type-label {
+  font-family: var(--font-bugrino, sans-serif);
+  font-weight: 300;
+}
+
+.fb-post-title {
+  margin: 1.5rem 0;
+  font-family: var(--font-arialblack, sans-serif);
+  text-align: center;
+  font-size: 0.875rem;
+}
+@media (min-width: 768px) {
+  .fb-post-title {
+    font-size: 1rem;
+  }
+}
+
+.fb-post-excerpt {
+  font-family: var(--font-fk, sans-serif);
+  text-align: center;
+  font-size: 0.875rem;
+}
+@media (min-width: 768px) {
+  .fb-post-excerpt {
+    font-size: 1rem;
+  }
+}
+
+.fb-post-layout2-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .fb-post-layout2-image {
+    width: 50%;
+  }
+}
+.fb-post-layout2-image img {
+  transition: all 0.3s ease-in-out;
+  filter: brightness(1) hue-rotate(0deg) saturate(1);
+}
+.fb-post-layout2-image img.horizontal {
+  width: 100%;
+}
+.fb-post-layout2-image img.vertical {
+  width: 66.6667%;
+}
+.fb-post-layout2-wrapper:hover .fb-post-layout2-image img {
+  filter: brightness(0.75) hue-rotate(180deg) saturate(1.5);
+}
+
+.fb-post-layout3-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.fb-post-layout3-wrapper.alignwide {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.fb-post-layout3-wrapper.alignfull {
+  width: 100%;
+}
+
+.fb-post-layout3-image {
+  max-width: 100%;
+  height: auto;
+}
+.fb-post-layout3-image.horizontal {
+  width: 100%;
+}
+.fb-post-layout3-image.vertical {
+  width: 66.6667%;
+}
+
+.fb-post-layout3-content {
+  position: relative;
+  padding: 1.5rem;
+  padding-bottom: 3.5rem;
+  transition: opacity 0.5s ease;
+}
+@media (min-width: 768px) {
+  .fb-post-layout3-content {
+    position: absolute;
+    width: 50%;
+    max-width: 32rem;
+  }
+  .fb-post-layout3-content:hover {
+    opacity: 0;
+  }
+}
+
+.fb-post-label {
+  font-family: var(--font-bugrino);
+  font-weight: 300;
+}
+
+.fb-post-title {
+  margin: 3.5rem 0;
+  font-family: var(--font-arialblack);
+  text-align: center;
+}
+
+.fb-post-excerpt {
+  font-family: var(--font-fk);
+  text-align: center;
+  font-size: 0.875rem;
+}

@@ -13,7 +13,8 @@ if (! function_exists('fb_blocks_render_post_block')) {
         $post_id    = $attributes['postId'] ?? 0;
         $layout     = $attributes['layout'] ?? 'layout1';
         $post_type  = $attributes['contentType'] ?? 'product';
-        $align      = $attributes['align'] ?? '';
+        $align = isset($attributes['align']) ? 'align' . $attributes['align'] : '';
+
 
         // Obtener el post o producto
         $post_object = null;
@@ -72,59 +73,63 @@ if (! function_exists('fb_blocks_render_post_block')) {
         switch ($layout) {
             case 'layout1':
 ?>
-                <div class="flex aspect-[50/60] w-full !max-w-none md:aspect-[100/50]">
-                    <div class="col-left w-[10%] border-r-2 md:w-[30%]" style="background-color: <?php echo esc_attr($bg_color); ?>; border-color: <?php echo esc_attr($border_color); ?>;"></div>
+                <div class="fb-post-layout1-wrapper <?php echo esc_attr($align); ?>" style="background-color: <?php echo esc_attr($bg_color); ?>;">
+                    <div class="fb-post-layout1-col-left " style="border-color: <?php echo esc_attr($border_color); ?>;"></div>
 
-                    <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="col-center group flex w-[80%] flex-col justify-between md:w-[40%]" style="background-color: <?php echo esc_attr($bg_inner); ?>;">
-                        <div class="flex h-full items-center justify-center">
-                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($name); ?>" class="<?php echo $image_orientation === 'horizontal' ? 'w-full' : 'w-2/3'; ?> filter transition-all duration-300 group-hover:brightness-75 group-hover:hue-rotate-[180deg] group-hover:saturate-150">
+                    <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="fb-post-layout1-center" style="background-color: <?php echo esc_attr($bg_inner); ?>;">
+                        <div class="fb-post-layout1-image-wrapper">
+                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($name); ?>"
+                                class="fb-post-layout1-image <?php echo $image_orientation === 'horizontal' ? 'horizontal' : 'vertical'; ?>">
                         </div>
-                        <div class="font-arialblack mx-4 mb-3 grow-0 text-sm md:text-base" style="color: <?php echo esc_attr($text_color); ?>;">
+                        <div class="fb-post-layout1-title" style="color: <?php echo esc_attr($text_color); ?>;">
                             <?php echo esc_html($name); ?>
                         </div>
                     </a>
 
-                    <div class="col-right w-[10%] border-l-2 md:w-[30%]" style="background-color: <?php echo esc_attr($bg_color); ?>; border-color: <?php echo esc_attr($border_color); ?>;"></div>
+                    <div class="fb-post-layout1-col-right" style="border-color: <?php echo esc_attr($border_color); ?>;"></div>
                 </div>
+
             <?php
                 break;
 
+
             case 'layout2':
             ?>
-                <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="not-prose <?php echo esc_attr($align); ?> group mx-6 my-6 flex border-y-2 py-4 md:flex-row" style="border-color: <?php echo esc_attr($border_color); ?>;">
-                    <div class="flex justify-center p-6 pb-10 md:w-1/2" style="background-color: <?php echo esc_attr($bg_color); ?>;">
-                        <div class="flex h-full w-full max-w-lg flex-col justify-between">
-                            <div class="font-bugrino font-light" style="color: <?php echo esc_attr($text_color); ?>;">
+                <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="fb-post-layout2-wrapper <?php echo esc_attr($align); ?>" style="border-color: <?php echo esc_attr($border_color); ?>;">
+                    <div class="fb-post-layout2-text" style="background-color: <?php echo esc_attr($bg_color); ?>;">
+                        <div class="fb-post-layout2-text-inner">
+                            <div class="fb-post-type-label" style="color: <?php echo esc_attr($text_color); ?>;">
                                 <?php echo esc_html($post_type_label); ?>
                             </div>
-                            <div class="font-arialblack my-6 text-center text-sm md:text-base" style="color: <?php echo esc_attr($text_color); ?>;">
+                            <div class="fb-post-title" style="color: <?php echo esc_attr($text_color); ?>;">
                                 <?php echo esc_html($name); ?>
                             </div>
-                            <div class="font-fk text-center text-sm md:text-base" style="color: <?php echo esc_attr($text_color); ?>;">
+                            <div class="fb-post-excerpt" style="color: <?php echo esc_attr($text_color); ?>;">
                                 <?php echo wp_kses_post($excerpt); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="flex h-full w-full items-center justify-center md:w-1/2">
-                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($name); ?>" class="<?php echo $image_orientation === 'horizontal' ? 'w-full' : 'w-2/3'; ?> filter transition-all duration-300 group-hover:brightness-75 group-hover:hue-rotate-[180deg] group-hover:saturate-150">
+                    <div class="fb-post-layout2-image">
+                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($name); ?>" class="<?php echo $image_orientation === 'horizontal' ? 'horizontal' : 'vertical'; ?>">
                     </div>
                 </a>
             <?php
                 break;
 
+
             case 'layout3':
             default:
             ?>
-                <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="not-prose <?php echo esc_attr($align); ?> relative flex flex-col items-center justify-center">
-                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($name); ?>" class="<?php echo ($image_orientation === 'horizontal') ? 'horizontal' : 'vertical'; ?>">
-                    <div class="p-6 pb-14 transition-opacity duration-500 md:absolute md:w-1/2 md:max-w-lg md:hover:opacity-0" style="background-color: <?php echo esc_attr($bg_color); ?>;">
-                        <div class="font-bugrino font-light" style="color: <?php echo esc_attr($text_color); ?>;">
+                <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="fb-post-layout3-wrapper <?php echo esc_attr($align); ?>">
+                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($name); ?>" class="fb-post-layout3-image <?php echo ($image_orientation === 'horizontal') ? 'horizontal' : 'vertical'; ?>">
+                    <div class="fb-post-layout3-content" style="background-color: <?php echo esc_attr($bg_color); ?>;">
+                        <div class="fb-post-label" style="color: <?php echo esc_attr($text_color); ?>;">
                             <?php echo esc_html($post_type_label); ?>
                         </div>
-                        <h3 class="font-arialblack my-14 text-center" style="color: <?php echo esc_attr($text_color); ?>;">
+                        <h3 class="fb-post-title" style="color: <?php echo esc_attr($text_color); ?>;">
                             <?php echo esc_html($name); ?>
                         </h3>
-                        <div class="font-fk text-center text-sm" style="color: <?php echo esc_attr($text_color); ?>;">
+                        <div class="fb-post-excerpt" style="color: <?php echo esc_attr($text_color); ?>;">
                             <?php echo wp_kses_post($excerpt); ?>
                         </div>
                     </div>
