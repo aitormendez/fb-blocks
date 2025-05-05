@@ -82,7 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		root.replaceChildren(player);
 
 		player.addEventListener("loaded-metadata", (event) => {
-			const videoEl = event.target.querySelector("video");
+			const videoEl = player.querySelector("video");
+
 			if (!videoEl) return;
 
 			const w = videoEl.videoWidth;
