@@ -19,9 +19,11 @@ function fb_blocks_render_marquee_block($attributes)
     // En este HTML solo ponemos una “estructura base”.
     // Usamos data-* para pasarle al JS la info necesaria.
     ob_start();
+
+    $alignClass = isset($attributes['align']) ? 'align' . $attributes['align'] : '';
 ?>
     <div
-        class="js-marquee marquee-wrapper"
+        class="js-marquee marquee-wrapper <?php echo esc_attr($alignClass); ?>"
         style="position: relative; overflow: hidden; background-color: <?php echo esc_attr($backgroundColor); ?>; white-space: nowrap;"
         data-text="<?php echo esc_attr($marqueeText); ?>"
         data-pill-background="<?php echo esc_attr($pillBackground); ?>"
