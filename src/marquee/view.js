@@ -12,13 +12,23 @@ document.addEventListener("DOMContentLoaded", function () {
 		const linkUrl = marquee.dataset.linkUrl || "";
 
 		// Seleccionamos el .marquee-pill
-		const pill = marquee.querySelector(".marquee-pill");
+		let pill = marquee.querySelector(".marquee-pill");
 		if (!pill) return;
 
-		// Borramos el contenido inicial (o lo conservas si prefieres)
-		pill.innerHTML = "";
+		// Cambiar DIV por A
+		if (linkUrl && linkUrl !== "#") {
+			const pillLink = document.createElement("a");
+			pillLink.className = pill.className; // Mantiene las clases existentes
+			pillLink.href = linkUrl;
+			pillLink.style.cssText = pill.style.cssText; // Mantiene los estilos existentes
+			pill.replaceWith(pillLink);
+			pillLink.innerHTML = ""; // Vacía el contenido
+			pill = pillLink; // Ahora pill apunta al enlace
+		} else {
+			pill.innerHTML = ""; // Si no hay link, solo vacía el contenido
+		}
 
-		// Creamos dos nodos contenedores .marquee-text para el efecto “loop infinito”
+		// Crear spans para el efecto marquee
 		const marqueeText1 = document.createElement("span");
 		marqueeText1.classList.add("marquee-text");
 		Object.assign(marqueeText1.style, {
@@ -29,9 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 
 		const marqueeText2 = marqueeText1.cloneNode(); // Clon vacío
-		marqueeText2.classList.add("marquee-text");
 
-		// 1) Medir ancho de una sola instancia
+		// Medir ancho de una sola instancia
 		const tempSpan = document.createElement("span");
 		tempSpan.style.whiteSpace = "nowrap";
 		tempSpan.style.visibility = "hidden";
@@ -43,13 +52,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		pill.removeChild(tempSpan);
 
 		const containerWidth = marquee.offsetWidth;
-		// Cuántas copias hacen falta
 		const needed = Math.ceil(containerWidth / singleWidth) + 2;
 
-		// 2) Generar array de spans
+		// Generar textos repetidos
 		const repeats = Array.from({ length: needed }, () => marqueeText);
 
-		// 3) Insertarlos en marqueeText1 y marqueeText2
+		// Insertarlos en marqueeText1 y marqueeText2
 		repeats.forEach((txt) => {
 			const span = document.createElement("span");
 			span.style.marginRight = "1em";
@@ -58,11 +66,11 @@ document.addEventListener("DOMContentLoaded", function () {
 			marqueeText2.appendChild(span.cloneNode(true));
 		});
 
-		// 4) Añadirlos al DOM
+		// Añadirlos al DOM
 		pill.appendChild(marqueeText1);
 		pill.appendChild(marqueeText2);
 
-		// 5) Lanzar animación GSAP
+		// Lanzar animación GSAP
 		if (typeof gsap !== "undefined") {
 			gsap.to([marqueeText1, marqueeText2], {
 				xPercent: -100,
