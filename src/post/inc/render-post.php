@@ -68,6 +68,14 @@ if (! function_exists('fb_blocks_render_post_block')) {
         $text_color     = $attributes['textColor'] ?? '#3e2b2f';
         $border_color   = $attributes['borderColor'] ?? '#3e2b2f';
 
+        // obtener artista
+        $artist_names = '';
+        $terms = get_the_terms($post_id, 'artist');
+        if (!is_wp_error($terms) && !empty($terms)) {
+            $artist_names = implode(', ', wp_list_pluck($terms, 'name'));
+        }
+
+
         // Generar HTML según el layout seleccionado
         ob_start();
         switch ($layout) {
@@ -82,8 +90,14 @@ if (! function_exists('fb_blocks_render_post_block')) {
                                 class="fb-post-layout1-image <?php echo $image_orientation === 'horizontal' ? 'horizontal' : 'vertical'; ?>">
                         </div>
                         <div class="fb-post-layout1-title" style="color: <?php echo esc_attr($text_color); ?>;">
-                            <?php echo esc_html($name); ?>
+                            <?php
+                            echo esc_html($name);
+                            if ($artist_names) {
+                                echo ' by ' . esc_html($artist_names);
+                            }
+                            ?>
                         </div>
+
                     </a>
 
                     <div class="fb-post-layout1-col-right" style="border-color: <?php echo esc_attr($border_color); ?>;"></div>
